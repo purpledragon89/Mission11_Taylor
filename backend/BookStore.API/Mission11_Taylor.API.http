@@ -1,0 +1,6 @@
+@Mission11_Taylor.API_HostAddress = http://localhost:5003
+
+GET {{Mission11_Taylor.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
