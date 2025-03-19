@@ -257,3 +257,4 @@
 /Users/rileytaylor/Desktop/IS_413/Mission11_Taylor/backend/BookStore.API/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Drawing.Common.dll
 /Users/rileytaylor/Desktop/IS_413/Mission11_Taylor/backend/BookStore.API/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Security.Cryptography.ProtectedData.dll
 /Users/rileytaylor/Desktop/IS_413/Mission11_Taylor/backend/BookStore.API/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Windows.Extensions.dll
+/Users/rileytaylor/Desktop/IS_413/Mission11_Taylor/backend/BookStore.API/obj/Debug/net8.0/Mission11_Taylor.API.sourcelink.json

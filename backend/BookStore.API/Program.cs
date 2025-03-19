@@ -5,6 +5,11 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.HttpsPort = 5001;  // Explicitly set the HTTPS port
+});
+
 // Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
