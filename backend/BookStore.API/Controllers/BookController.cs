@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,14 @@ namespace Mission11_Taylor.API.Controllers
         [HttpGet("AllBooks")]
         public IActionResult GetProjects(int pageAmount = 5, int pagenum = 1, string sortOrder = "asc")
         {
+            
+            HttpContext.Response.Cookies.Append("FavoriteClassification", "Non-Fiction", new CookieOptions {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddMinutes(20)
+                });
+            
             var query = _context.Books.AsQueryable();
             
             // Apply sorting
