@@ -14,7 +14,14 @@ function BookList() {
     const fetchBooks = async () => {
       try {
         const response = await fetch(
-          `https://localhost:5055/api/Book/AllBooks?pageAmount=${pagesize}&pagenum=${pagenum}&sortOrder=${sortOrder}`
+          `https://localhost:5055/api/Book/AllBooks?pageAmount=${pagesize}&pagenum=${pagenum}&sortOrder=${sortOrder}`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         const data = await response.json();
 

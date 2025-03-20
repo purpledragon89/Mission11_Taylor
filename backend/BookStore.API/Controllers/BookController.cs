@@ -21,7 +21,10 @@ namespace Mission11_Taylor.API.Controllers
         [HttpGet("AllBooks")]
         public IActionResult GetProjects(int pageAmount = 5, int pagenum = 1, string sortOrder = "asc")
         {
-            
+            string? favTopicOutput = Request.Cookies["FavoriteClassification"];
+            Console.WriteLine($"______COOKIE______\n{favTopicOutput}");
+
+
             HttpContext.Response.Cookies.Append("FavoriteClassification", "Non-Fiction", new CookieOptions {
                 HttpOnly = true,
                 Secure = true,
