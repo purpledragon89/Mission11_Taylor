@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
-import { Book } from "./types/books";
+import { Book } from "../types/books";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function BookList() {
+function BookList({ selectedcategories }: { selectedcategories: string[] }) {
   const [books, setbooks] = useState<Book[]>([]);
   const [pagesize, setpagesize] = useState<number>(5);
   const [pagenum, setpagenum] = useState<number>(1);
   const [totalBookItems, settotalbookitems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortOrder, setSortOrder] = useState<string>("asc");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
+      const categoryparams = selectedcategories
+        .map((c) => `booktypes=${encodeURIComponent(c)}`)
+        .join("&");
+
       try {
         const response = await fetch(
-          `https://localhost:5055/api/Book/AllBooks?pageAmount=${pagesize}&pagenum=${pagenum}&sortOrder=${sortOrder}`
+          `https://localhost:5055/api/Book/AllBooks?pageAmount=${pagesize}&pagenum=${pagenum}&sortOrder=${sortOrder}${selectedcategories.length ? `&${categoryparams}` : ``}`
         );
         const data = await response.json();
 
@@ -34,7 +40,7 @@ function BookList() {
     };
 
     fetchBooks();
-  }, [pagesize, pagenum, sortOrder]);
+  }, [pagesize, pagenum, sortOrder, selectedcategories]);
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value);
@@ -43,7 +49,6 @@ function BookList() {
 
   return (
     <>
-      <h1>Hilton's Books</h1>
       <div className="filters">
         <label>
           Sort by Title:
@@ -93,6 +98,13 @@ function BookList() {
                 <strong>Price:</strong> {b.price}
               </li>
             </ul>
+            <button
+              className="btn btn-success"
+              onClick={() => navigate(`/Cart/${encodeURIComponent(b.title)}/${encodeURIComponent(b.price)}`)}
+
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       ))}
