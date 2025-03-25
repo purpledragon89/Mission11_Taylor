@@ -6,17 +6,23 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BooksPage from "./pages/BooksPage";
 import Cart from "./pages/Cart";
 import FullCart from "./pages/FullCart";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<BooksPage />} />
-          <Route path="/Cart/:title/:price" element={<Cart />} />
-          <Route path="FullCart" element={<FullCart />} />
-        </Routes>
-      </Router>
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<BooksPage />} />
+            <Route
+              path="/Cart/:title/:unitprice/:bookID/:author"
+              element={<Cart />}
+            />
+            <Route path="FullCart" element={<FullCart />} />
+          </Routes>
+        </Router>
+      </CartProvider>
     </>
   );
 }

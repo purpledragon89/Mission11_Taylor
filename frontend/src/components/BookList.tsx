@@ -100,8 +100,13 @@ function BookList({ selectedcategories }: { selectedcategories: string[] }) {
             </ul>
             <button
               className="btn btn-success"
-              onClick={() => navigate(`/Cart/${encodeURIComponent(b.title)}/${encodeURIComponent(b.price)}`)}
-
+              onClick={() =>
+                navigate(
+                  `/Cart/${encodeURIComponent(b.title)}/${encodeURIComponent(
+                    b.price.toString()
+                  )}/${b.bookID}/${encodeURIComponent(b.author)}`
+                )
+              }
             >
               Add to Cart
             </button>
