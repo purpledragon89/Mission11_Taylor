@@ -6,7 +6,7 @@ interface FetchBooksResponse {
   totalNumBooks: number;
 }
 
-const API_URL = `https://localhost:5055/api`;
+const API_URL = `https://bookstore-taylor2-backend.azurewebsites.net/api`;
 
 export const fetchBooks = async (
   pagesize: number,
@@ -75,7 +75,7 @@ export const updateBook = async (
 export const deleteBook = async (bookID: number): Promise<void> => {
   try {
     console.log(`Attempting to delete book with ID: ${bookID}`);
-    console.log(`DELETE request to: ${API_URL}/Book//DeleteBook/${bookID}`);
+    console.log(`DELETE request to: ${API_URL}/Book/DeleteBook/${bookID}`);
 
     const response = await fetch(`${API_URL}/Book/DeleteBook/${bookID}`, {
       method: "DELETE",

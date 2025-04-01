@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mission11_Taylor.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b54aab865ec381dbf0a4047037b17ad711361cd9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f0f32950aef57cb35b7e74cb4961f98a781bacf")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mission11_Taylor.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mission11_Taylor.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
