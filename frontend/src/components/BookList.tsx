@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react";
-import { Book } from "../types/books";
+import { Book } from "../types/Book";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchBooks } from "../api/projectsAPI";
+import Pagination from "./Pagination";
 
 function BookList({ selectedcategories }: { selectedcategories: string[] }) {
   const [books, setbooks] = useState<Book[]>([]);
   const [pagesize, setpagesize] = useState<number>(5);
   const [pagenum, setpagenum] = useState<number>(1);
-  const [totalBookItems, settotalbookitems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortOrder, setSortOrder] = useState<string>("asc");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const categoryparams = selectedcategories
-        .map((c) => `booktypes=${encodeURIComponent(c)}`)
-        .join("&");
-
+    const loadBooks = async () => {
       try {
-        const response = await fetch(
-          `https://localhost:5055/api/Book/AllBooks?pageAmount=${pagesize}&pagenum=${pagenum}&sortOrder=${sortOrder}${selectedcategories.length ? `&${categoryparams}` : ``}`
+        setLoading(true);
+        const data = await fetchBooks(
+          pagesize,
+          pagenum,
+          sortOrder,
+          selectedcategories
         );
-        const data = await response.json();
 
         // Check if data has the $values property which contains the array
         if (data && data.books.$values && Array.isArray(data.books.$values)) {
           setbooks(data.books.$values);
-          settotalbookitems(data.totalNumBooks);
           setTotalPages(Math.ceil(data.totalNumBooks / pagesize));
         } else {
           console.error("Unexpected data format:", data);
@@ -36,11 +36,15 @@ function BookList({ selectedcategories }: { selectedcategories: string[] }) {
       } catch (error) {
         console.error("Error fetching books:", error);
         setbooks([]);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchBooks();
+    loadBooks();
   }, [pagesize, pagenum, sortOrder, selectedcategories]);
+
+  if (loading) return <p>loading projects...</p>;
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value);
@@ -113,13 +117,16 @@ function BookList({ selectedcategories }: { selectedcategories: string[] }) {
           </div>
         </div>
       ))}
-      <div className="pagination">
-        {[...Array(totalPages)].map((_, index) => (
-          <button key={index + 1} onClick={() => setpagenum(index + 1)}>
-            {index + 1}
-          </button>
-        ))}
-      </div>
+      <Pagination
+        index={pagenum}
+        totalPages={totalPages}
+        pageSize={pagesize}
+        onPageChange={setpagenum}
+        onPageSizeChange={(newSize) => {
+          setpagesize(newSize);
+          setpagenum(1);
+        }}
+      />
     </>
   );
 }

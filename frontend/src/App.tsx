@@ -7,6 +7,7 @@ import BooksPage from "./pages/BooksPage";
 import Cart from "./pages/Cart";
 import FullCart from "./pages/FullCart";
 import { CartProvider } from "./context/CartContext";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               element={<Cart />}
             />
             <Route path="FullCart" element={<FullCart />} />
+            <Route path="/Admin" element={<Admin />} />
           </Routes>
         </Router>
       </CartProvider>

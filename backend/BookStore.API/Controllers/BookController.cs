@@ -57,5 +57,55 @@ namespace Mission11_Taylor.API.Controllers
 
             return Ok(bookCategories);
         }
+
+        [HttpPost("AddBook")]
+        public IActionResult addBook([FromBody]Book newBook)
+        {
+            _context.Books.Add(newBook);
+            _context.SaveChanges();
+            return Ok(newBook);
+        }
+        [HttpPut("UpdateBook/{bookID}")]
+        public IActionResult UpdateBook(int bookID, [FromBody] Book updatedBook)
+        {
+            var existingBook = _context.Books.Find(bookID);
+
+            existingBook.Title = updatedBook.Title;
+            existingBook.Author = updatedBook.Author;
+            existingBook.Category = updatedBook.Category;
+            existingBook.Classification = updatedBook.Classification;
+            existingBook.ISBN = updatedBook.ISBN;
+            existingBook.PageCount = updatedBook.PageCount;
+            existingBook.Price = updatedBook.Price;
+            existingBook.Publisher = updatedBook.Publisher;
+           
+           _context.Books.Update(existingBook);
+           _context.SaveChanges();
+
+           return Ok(existingBook);
+        }
+        [HttpDelete("DeleteBook/{bookID}")]
+public IActionResult DeleteBook(int bookID)  // Method name now matches the route
+{
+    try
+    {
+        var book = _context.Books.Find(bookID);
+
+        if (book == null)
+        {
+            return NotFound(new {message = "Book not found"});
+        }
+        
+        _context.Books.Remove(book);
+        _context.SaveChanges();
+
+        return NoContent();
+    }
+    catch (Exception ex)
+    {
+        // Log the exception
+        Console.WriteLine($"Error deleting book: {ex.Message}");
+        return StatusCode(500, new { message = $"Internal server error: {ex.Message}" });
     }
 }
+    }}
